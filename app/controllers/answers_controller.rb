@@ -4,10 +4,11 @@ class AnswersController < ApplicationController
   expose :answer
 
   def create
-    answer.question_id = params[:question_id]
+    question = Question.find(params[:question_id])
+    question.answers.push(answer)
 
     if answer.save
-      redirect_to question_path(answer.question_id)
+      redirect_to question
     else
       render :new
     end
