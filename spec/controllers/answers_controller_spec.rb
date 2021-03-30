@@ -12,7 +12,7 @@ RSpec.describe AnswersController, type: :controller do
         expect do
           post :create,
                params: { question_id: question.id, answer: attributes_for(:answer) }
-        end.to change(Answer, :count).by(1)
+        end.to change(question.answers, :count).by(1)
       end
 
       it 'redirects to question show view' do
