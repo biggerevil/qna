@@ -6,7 +6,6 @@ RSpec.describe QuestionsController, type: :controller do
   let(:user) { create(:user) }
 
   describe 'POST #create' do
-
     before { login(user) }
 
     let(:question) { create(:question) }

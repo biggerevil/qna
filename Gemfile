@@ -32,8 +32,8 @@ gem 'decent_exposure', '~> 3.0'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
-gem 'slim-rails'
 gem 'devise'
+gem 'slim-rails'
 
 # Rubocop extensions
 gem 'rubocop-rails', require: false
@@ -62,10 +62,10 @@ group :test do
   gem 'capybara', '>= 3.26'
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
+  gem 'launchy'
   gem 'rails-controller-testing'
   gem 'shoulda-matchers', '~> 4.0'
   gem 'webdrivers'
-  gem 'launchy'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
