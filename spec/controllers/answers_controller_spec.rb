@@ -26,7 +26,7 @@ RSpec.describe AnswersController, type: :controller do
         expect do
           post :create,
                params: { question_id: question.id, answer: attributes_for(:answer, :invalid) }
-        end.to_not change(Answer, :count)
+        end.not_to change(Answer, :count)
       end
 
       it 're-renders new view' do

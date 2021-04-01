@@ -29,7 +29,7 @@ RSpec.describe QuestionsController, type: :controller do
         expect do
           post :create,
                params: { question: attributes_for(:question, :invalid) }
-        end.to_not change(Question, :count)
+        end.not_to change(Question, :count)
       end
 
       it 're-renders new view' do
@@ -68,12 +68,14 @@ RSpec.describe QuestionsController, type: :controller do
       before do
         patch :update, params: { id: question, question: attributes_for(:question, :invalid) }
       end
+
       it 'does not change question' do
         question.reload
 
         expect(question.title).to eq 'MyString'
         expect(question.body).to eq 'MyText'
       end
+
       it 're-renders edit view' do
         expect(response).to render_template :edit
       end
