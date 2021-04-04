@@ -24,7 +24,7 @@ class AnswersController < ApplicationController
       redirect_to question_path(answer.question), notice: 'You are not author of this answer!'
       return
     end
-    answer.delete
+    answer.destroy
 
     question = answer.question
     redirect_to question_path(question)
