@@ -16,24 +16,25 @@ describe 'User can delete its answer', "
     before { sign_in(user) }
 
     it 'Tries to delete its answer' do
-      answers.second.update(author: user)
-      answers.second.save!
+      answers.second.update!(author: user)
 
       visit question_path(question)
 
-      expect(page).to have_content('Delete answer')
+      expect(page).to have_content(answers.second.body)
+      click_on 'Delete answer'
+      expect(page).not_to have_content(answers.second.body)
     end
 
     it 'Tries to delete not its answer' do
       visit question_path(question)
 
-      expect(page).not_to have_content('Delete answer')
+      expect(page).not_to have_link('Delete answer')
     end
   end
 
   it 'Unauthenticated user tries to delete answer' do
     visit question_path(question)
 
-    expect(page).not_to have_content('Delete answer')
+    expect(page).not_to have_link('Delete answer')
   end
 end
