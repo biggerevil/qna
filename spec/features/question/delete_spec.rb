@@ -19,15 +19,18 @@ describe 'User can delete its questions', "
     it 'Author' do
       visit question_path(question)
 
+      expect(page).to have_content(question.body)
+
       click_on 'Delete question'
 
       expect(page).to have_content 'Question was successfully deleted.'
+      expect(page).not_to have_content(question.body)
     end
 
     it 'Not author' do
       visit question_path(second_question)
 
-      expect(page).not_to have_content 'Delete question'
+      expect(page).not_to have_link 'Delete question'
     end
   end
 
@@ -37,7 +40,7 @@ describe 'User can delete its questions', "
     it 'Unauthenticated user tries to delete question' do
       visit question_path(question)
 
-      expect(page).not_to have_content 'Delete question'
+      expect(page).not_to have_link 'Delete question'
     end
   end
 end
