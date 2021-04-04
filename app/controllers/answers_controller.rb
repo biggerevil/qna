@@ -10,9 +10,7 @@ class AnswersController < ApplicationController
     current_user.answers.push(answer)
     answer.question = question
 
-    puts "question.answer before save = #{question.answers.inspect}"
     if answer.save
-      puts "question.answer after save = #{question.answers.inspect}"
       redirect_to question, notice: 'Your answer was successfully created.'
     else
       render 'questions/show'
