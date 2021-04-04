@@ -11,27 +11,18 @@ RSpec.describe User, type: :model do
   describe 'Testing author_of? method' do
     let(:user) { create(:user) }
     let(:question) { create(:question, author: user) }
-    let(:answer) { create(:answer, question: question, author: user) }
 
-    context 'author is current user' do
-      it 'returns true for question' do
-        user.author_of?(question)
-      end
-
-      it 'returns true for answer' do
-        user.author_of?(answer)
+    context 'Author' do
+      it 'Returns true' do
+        expect(user.author_of?(question)).to be_truthy
       end
     end
 
-    context 'author is not current user' do
+    context 'Not author' do
       let(:second_user) { create(:user) }
 
-      it 'returns false for question' do
-        second_user.author_of?(question)
-      end
-
-      it 'returns false for answer' do
-        second_user.author_of?(answer)
+      it 'Returns false' do
+        expect(second_user.author_of?(question)).to be_falsey
       end
     end
   end
