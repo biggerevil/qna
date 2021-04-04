@@ -13,6 +13,7 @@ describe 'User can create answer', "
     let(:user) { create(:user) }
 
     before { sign_in(user) }
+
     before { visit question_path(question) }
 
     it 'User can answer question' do
@@ -32,7 +33,7 @@ describe 'User can create answer', "
   context 'Not authenticated user' do
     before { visit question_path(question) }
 
-    it "User tries to answer question" do
+    it 'User tries to answer question' do
       fill_in 'answer_body', with: 'New answer'
       click_on 'Create Answer'
 

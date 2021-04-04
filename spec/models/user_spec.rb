@@ -14,7 +14,7 @@ RSpec.describe User, type: :model do
 
     context 'Author' do
       it 'Returns true' do
-        expect(user.author_of?(question)).to be_truthy
+        expect(user).to be_author_of(question)
       end
     end
 
@@ -22,7 +22,7 @@ RSpec.describe User, type: :model do
       let(:second_user) { create(:user) }
 
       it 'Returns false' do
-        expect(second_user.author_of?(question)).to be_falsey
+        expect(second_user).not_to be_author_of(question)
       end
     end
   end
