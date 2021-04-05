@@ -1,0 +1,11 @@
+h1= question.title
+p= question.body
+- if current_user&.author_of?(question)
+  = link_to 'Delete question', question_path(question), method: :delete
+
+- question.answers.each do |answer|
+  = render answer
+
+h3= 'Create new answer'
+= render 'shared/errors', resource: answer
+= render 'answers/form', answer: answer

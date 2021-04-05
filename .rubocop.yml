@@ -1,2 +1,5 @@
 Metrics/LineLength:
   Max: 100
+require:
+  - rubocop-rails
+  - rubocop-rspec

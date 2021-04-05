@@ -39,3 +39,4 @@ yarn-debug.log*
 /config/database.yml
 # Local directory with RubyMine settings (lesson 3-2)
 .idea
+.DS_Store
