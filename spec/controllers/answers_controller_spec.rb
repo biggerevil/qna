@@ -66,7 +66,7 @@ RSpec.describe AnswersController, type: :controller do
         expect do
           delete :destroy,
                  params: { id: answer, question_id: question }
-        end.to change(question.answers, :count).by(0)
+        end.not_to change(question.answers, :count)
       end
 
       it 'redirects to question' do
