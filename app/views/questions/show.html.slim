@@ -7,5 +7,6 @@ p= question.body
   = render answer
 
 h3= 'Create new answer'
-= render 'shared/errors', resource: answer
+.answer-errors
+  = render 'shared/errors', resource: answer
 = render 'answers/form', answer: answer
