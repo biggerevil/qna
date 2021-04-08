@@ -16,17 +16,17 @@ describe 'User can create answer', "
 
     before { visit question_path(question) }
 
-    it 'User can answer question' do
+    it 'can answer question', js: true do
       fill_in 'answer_body', with: 'New answer'
       click_on 'Create Answer'
 
-      expect(page).to have_content 'Your answer was successfully created.'
+      expect(page).to have_content 'New answer'
     end
 
-    it "User can't create empty answer" do
+    it "can't create empty answer", js: true do
       click_on 'Create Answer'
 
-      expect(page).to have_content 'error(s) detected'
+      expect(page).to have_content "Body can't be blank"
     end
   end
 

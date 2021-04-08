@@ -32,8 +32,17 @@ gem 'decent_exposure', '~> 3.0'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
+
+# Devise for authorization
 gem 'devise'
+
+# Add slim (using instead of erb in views)
 gem 'slim-rails'
+
+# jQuery for simplifying our lives
+# Installing jQuery this way:
+# https://stackoverflow.com/questions/54905026/how-to-add-jquery-third-party-plugin-in-rails-6-webpacker
+# gem 'jquery-rails'
 
 # Rubocop extensions
 gem 'rubocop-rails', require: false

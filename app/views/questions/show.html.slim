@@ -3,9 +3,10 @@ p= question.body
 - if current_user&.author_of?(question)
   = link_to 'Delete question', question_path(question), method: :delete
 
-- question.answers.each do |answer|
-  = render answer
+.answers
+  = render question.answers
 
 h3= 'Create new answer'
-= render 'shared/errors', resource: answer
+.answer-errors
+  = render 'shared/errors', resource: answer
 = render 'answers/form', answer: answer
