@@ -6,6 +6,9 @@ table
       th Title
   tbody
     - questions.each do |question|
-      = render question
+      tr
+        td = link_to "#{question.title}", question_path(question)
+        - if current_user&.author_of?(question)
+          td= link_to 'Delete question', question_path(question), method: :delete
 
 p= link_to 'Ask question', new_question_path
