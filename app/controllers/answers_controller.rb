@@ -19,14 +19,10 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    unless current_user.author_of?(answer)
-      redirect_to question_path(answer.question), notice: 'You are not author of this answer!'
-      return
-    end
-    answer.destroy
+    return unless current_user.author_of?(answer)
 
-    question = answer.question
-    redirect_to question_path(question)
+    @answer = Answer.find(params[:id])
+    @answer.destroy
   end
 
   private

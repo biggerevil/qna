@@ -48,7 +48,6 @@ RSpec.describe AnswersController, type: :controller do
         it 'changes answer attributes' do
           patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
           answer.reload
-          puts "answer after = #{answer.inspect}"
         end
 
         it 'renders update view' do
@@ -101,14 +100,14 @@ RSpec.describe AnswersController, type: :controller do
       it 'deletes answer from database' do
         expect do
           delete :destroy,
-                 params: { id: answer, question_id: question }
+                 params: { id: answer, question_id: question }, format: :js
         end.to change(question.answers, :count).by(-1)
       end
 
-      it 'redirects to question' do
+      it 'renders destroy view' do
         delete :destroy,
-               params: { id: answer, question_id: question }
-        expect(response).to redirect_to(question_path(question))
+               params: { id: answer, question_id: question }, format: :js
+        expect(response).to render_template :destroy
       end
     end
 
@@ -120,14 +119,14 @@ RSpec.describe AnswersController, type: :controller do
       it 'deletes answer from database' do
         expect do
           delete :destroy,
-                 params: { id: answer, question_id: question }
+                 params: { id: answer, question_id: question }, format: :js
         end.not_to change(question.answers, :count)
       end
 
-      it 'redirects to question' do
+      it 'renders destroy view' do
         delete :destroy,
-               params: { id: answer, question_id: question }
-        expect(response).to redirect_to(question_path(answer.question))
+               params: { id: answer, question_id: question }, format: :js
+        expect(response).to render_template :destroy
       end
     end
   end
