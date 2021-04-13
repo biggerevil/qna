@@ -25,6 +25,13 @@ class AnswersController < ApplicationController
     @answer.destroy
   end
 
+  def make_best
+    return unless current_user.author_of?(answer)
+
+    @question = answer.question
+    answer.make_best
+  end
+
   private
 
   def answer_params

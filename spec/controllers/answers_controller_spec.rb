@@ -3,8 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:question) { create(:question) }
   let(:author) { create(:user) }
+  let(:question) { create(:question, author: author) }
 
   before { sign_in(author) }
 
@@ -127,6 +127,54 @@ RSpec.describe AnswersController, type: :controller do
         delete :destroy,
                params: { id: answer, question_id: question }, format: :js
         expect(response).to render_template :destroy
+      end
+    end
+  end
+
+  describe 'PATCH #make_best' do
+    let(:first_answer) { create(:answer, author: author, question: question) }
+    let(:second_answer) { create(:answer, author: author, question: question) }
+
+    context 'Author' do
+      it 'makes best' do
+        patch :make_best, params: { id: first_answer }, format: :js
+        first_answer.reload
+
+        expect(first_answer.is_best).to be_truthy
+      end
+
+      it 'makes previous not best' do
+        first_answer.update!(is_best: true)
+
+        patch :make_best, params: { id: second_answer }, format: :js
+        second_answer.reload
+        first_answer.reload
+
+        expect(second_answer.is_best).to be_truthy
+        expect(first_answer.is_best).to be_falsey
+      end
+
+      it 'renders template make_best' do
+        patch :make_best, params: { id: first_answer }, format: :js
+        expect(response).to render_template :make_best
+      end
+    end
+
+    context 'Not author' do
+      let(:second_user) { create(:user) }
+
+      before { sign_in(second_user) }
+
+      it "doesn't make best" do
+        patch :make_best, params: { id: first_answer }, format: :js
+        first_answer.reload
+
+        expect(first_answer.is_best).to be_falsey
+      end
+
+      it 'renders template make_best' do
+        patch :make_best, params: { id: first_answer }, format: :js
+        expect(response).to render_template :make_best
       end
     end
   end
