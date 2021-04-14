@@ -18,23 +18,46 @@ describe 'User can edit his answer', "
   end
 
   describe 'Authenticated user', js: true do
-    it 'edits his answer' do
-      sign_in user
-      visit question_path(question)
+    context 'Author' do
+      before do
+        sign_in user
+        visit question_path(question)
 
-      click_on 'Edit'
+        click_on 'Edit'
+      end
 
-      within '.answers' do
-        fill_in 'Your answer', with: 'edited answer'
-        click_on 'Save'
+      it 'edits his answer' do
+        within '.answers' do
+          fill_in 'Your answer', with: 'edited answer'
+          click_on 'Save'
 
-        expect(page).not_to have_content answer.body
-        expect(page).to have_content 'edited answer'
-        expect(page).not_to have_selector 'textarea'
+          expect(page).not_to have_content answer.body
+          expect(page).to have_content 'edited answer'
+          expect(page).not_to have_selector 'textarea'
+        end
+      end
+
+      it 'edits his answer with errors' do
+        within '.answers' do
+          fill_in 'Your answer', with: ''
+          click_on 'Save'
+
+          expect(page).to have_selector 'textarea'
+        end
+
+        expect(page).to have_content "Body can't be blank"
       end
     end
 
-    scenario 'edits his answer with errors'
-    scenario "tries to edit other user's answer"
+    context 'Not author' do
+      let(:second_user) { create(:user) }
+
+      it "tries to edit other user's answer" do
+        sign_in(second_user)
+        visit question_path(question)
+
+        expect(page).not_to have_link 'Edit'
+      end
+    end
   end
 end

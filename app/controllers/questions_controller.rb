@@ -18,11 +18,11 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if question.update(question_params)
-      redirect_to question_path(question)
-    else
-      render :edit
-    end
+    @question = Question.find(params[:id])
+
+    return head 403 unless current_user.author_of?(@question)
+
+    @question.update(question_params)
   end
 
   def destroy

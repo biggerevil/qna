@@ -12,19 +12,24 @@ class AnswersController < ApplicationController
 
   def update
     @answer = Answer.find(params[:id])
+    return head 403 unless current_user.author_of?(@answer)
+
     @answer.update(answer_params)
     @question = @answer.question
   end
 
   def destroy
-    unless current_user.author_of?(answer)
-      redirect_to question_path(answer.question), notice: 'You are not author of this answer!'
-      return
-    end
-    answer.destroy
+    return head 403 unless current_user.author_of?(answer)
 
-    question = answer.question
-    redirect_to question_path(question)
+    @answer = Answer.find(params[:id])
+    @answer.destroy
+  end
+
+  def make_best
+    return head 403 unless current_user.author_of?(answer)
+
+    @question = answer.question
+    answer.make_best
   end
 
   private
