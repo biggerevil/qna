@@ -20,7 +20,7 @@ class QuestionsController < ApplicationController
   def update
     @question = Question.find(params[:id])
 
-    return unless current_user.author_of?(@question)
+    return head 403 unless current_user.author_of?(@question)
 
     @question.update(question_params)
   end

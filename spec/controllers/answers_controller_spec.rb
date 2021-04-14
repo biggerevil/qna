@@ -85,10 +85,10 @@ RSpec.describe AnswersController, type: :controller do
         expect(answer.body).to eq old_body
       end
 
-      it 'renders update view' do
+      it 'response has 403 http status' do
         patch :update, params: { id: answer, answer: { body: 'new body' } },
                        format: :js
-        expect(response).to render_template :update
+        expect(response).to have_http_status(:forbidden)
       end
     end
   end
@@ -123,10 +123,10 @@ RSpec.describe AnswersController, type: :controller do
         end.not_to change(question.answers, :count)
       end
 
-      it 'renders destroy view' do
+      it 'response has 403 http status' do
         delete :destroy,
                params: { id: answer, question_id: question }, format: :js
-        expect(response).to render_template :destroy
+        expect(response).to have_http_status(:forbidden)
       end
     end
   end
@@ -172,9 +172,9 @@ RSpec.describe AnswersController, type: :controller do
         expect(first_answer.is_best).to be_falsey
       end
 
-      it 'renders template make_best' do
+      it 'response has 403 http status' do
         patch :make_best, params: { id: first_answer }, format: :js
-        expect(response).to render_template :make_best
+        expect(response).to have_http_status(:forbidden)
       end
     end
   end

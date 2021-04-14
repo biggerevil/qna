@@ -12,21 +12,21 @@ class AnswersController < ApplicationController
 
   def update
     @answer = Answer.find(params[:id])
-    return unless current_user.author_of?(@answer)
+    return head 403 unless current_user.author_of?(@answer)
 
     @answer.update(answer_params)
     @question = @answer.question
   end
 
   def destroy
-    return unless current_user.author_of?(answer)
+    return head 403 unless current_user.author_of?(answer)
 
     @answer = Answer.find(params[:id])
     @answer.destroy
   end
 
   def make_best
-    return unless current_user.author_of?(answer)
+    return head 403 unless current_user.author_of?(answer)
 
     @question = answer.question
     answer.make_best
