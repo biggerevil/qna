@@ -83,6 +83,29 @@ RSpec.describe QuestionsController, type: :controller do
         expect(response).to render_template :update
       end
     end
+
+    context 'Not author' do
+      let(:second_user) { create(:user) }
+
+      before { sign_in(second_user) }
+
+      it "can't update question" do
+        old_question_body = question.body
+        old_question_title = question.title
+        patch :update,
+              params: { id: question, question: { title: 'another title', body: 'updated body' } }, format: :js
+        question.reload
+
+        expect(question.title).to eq old_question_title
+        expect(question.body).to eq old_question_body
+      end
+
+      it 'returns 403 http status' do
+        patch :update,
+              params: { id: question, question: { title: 'updated title', body: 'updated body' } }, format: :js
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
   end
 
   describe 'DELETE #destroy' do
