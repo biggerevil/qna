@@ -17,17 +17,17 @@ RSpec.describe Answer, type: :model do
     it 'makes answer best' do
       first_answer.make_best
 
-      expect(first_answer.is_best).to be_truthy
+      expect(first_answer).to be_best
     end
 
     it 'makes another answer best' do
-      first_answer.update!(is_best: true)
+      first_answer.update!(best: true)
 
       second_answer.make_best
       first_answer.reload
 
-      expect(second_answer.is_best).to be_truthy
-      expect(first_answer.is_best).to be_falsey
+      expect(second_answer).to be_best
+      expect(first_answer).not_to be_best
     end
   end
 end

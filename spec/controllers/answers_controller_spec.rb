@@ -140,18 +140,18 @@ RSpec.describe AnswersController, type: :controller do
         patch :make_best, params: { id: first_answer }, format: :js
         first_answer.reload
 
-        expect(first_answer.is_best).to be_truthy
+        expect(first_answer).to be_best
       end
 
       it 'makes previous not best' do
-        first_answer.update!(is_best: true)
+        first_answer.update!(best: true)
 
         patch :make_best, params: { id: second_answer }, format: :js
         second_answer.reload
         first_answer.reload
 
-        expect(second_answer.is_best).to be_truthy
-        expect(first_answer.is_best).to be_falsey
+        expect(second_answer).to be_best
+        expect(first_answer).not_to be_best
       end
 
       it 'renders template make_best' do
@@ -169,7 +169,7 @@ RSpec.describe AnswersController, type: :controller do
         patch :make_best, params: { id: first_answer }, format: :js
         first_answer.reload
 
-        expect(first_answer.is_best).to be_falsey
+        expect(first_answer).not_to be_best
       end
 
       it 'response has 403 http status' do

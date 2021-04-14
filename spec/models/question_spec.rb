@@ -16,7 +16,7 @@ RSpec.describe Question, type: :model do
     let(:second_answer) { create(:answer, author: author, question: question) }
 
     it 'returns best answer if there is one' do
-      first_answer.update!(is_best: true)
+      first_answer.update!(best: true)
 
       expect(question.best_answer).to eq first_answer
     end

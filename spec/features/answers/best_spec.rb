@@ -26,7 +26,7 @@ describe 'User can choose answer as best', "
     end
 
     it 'can choose another answer as best' do
-      first_answer.update!(is_best: true)
+      first_answer.update!(best: true)
 
       visit question_path(question)
 
@@ -44,7 +44,7 @@ describe 'User can choose answer as best', "
     end
 
     it 'best answer above others' do
-      first_answer.update!(is_best: true)
+      first_answer.update!(best: true)
 
       visit question_path(question)
 
