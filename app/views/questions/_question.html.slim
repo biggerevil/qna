@@ -1,11 +1,15 @@
 h1= question.title
 p= question.body
 
-- if question.files.attached?
-  - question.files.each do |file|
-    p= link_to file.filename.to_s, url_for(file)
-
 - if current_user&.author_of?(question)
+  - if question.files.attached?
+    .question-files
+      - question.files.each do |file|
+        p id="file-#{file.id}"
+          = link_to file.filename.to_s, url_for(file)
+          '
+          = link_to 'Delete file', file_path(file), method: :delete, remote: true
+
   = link_to 'Delete question', question_path(question), method: :delete
   '
   = link_to 'Edit question', '#', class: 'edit-question-link', data: { question_id: question.id }
