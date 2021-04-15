@@ -8,8 +8,8 @@ describe 'User can delete files from its answer', "
   I'd like to be able to delete files from my answer
 ", js: true do
   describe 'Authenticated user' do
-    let(:user) { create(:user) }
-    let(:question) { create(:question, author: user) }
+    let!(:user) { create(:user) }
+    let!(:question) { create(:question, author: user) }
     let!(:answer) { create(:answer, question: question, author: user) }
 
     let(:second_user) { create(:user) }
@@ -24,9 +24,12 @@ describe 'User can delete files from its answer', "
 
         click_on 'Save'
       end
+
+      click_on 'Log out'
     end
 
     it 'Author' do
+      sign_in(user)
       visit question_path(question)
 
       click_on 'Delete file'
@@ -35,7 +38,6 @@ describe 'User can delete files from its answer', "
     end
 
     it 'Not author' do
-      click_on 'Log out'
       sign_in(second_user)
       visit question_path(question)
 
