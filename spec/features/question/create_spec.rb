@@ -37,7 +37,7 @@ describe 'User can create question', "
       fill_in 'Title', with: 'Test question'
       fill_in 'Body', with: 'text text text'
 
-      attach_file 'File',
+      attach_file 'Files',
                   ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
       click_on 'Ask'
 

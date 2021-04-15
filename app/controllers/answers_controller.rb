@@ -3,7 +3,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, only: %i[create destroy]
 
-  expose :answer
+  expose :answer, scope: -> { Answer.with_attached_files }
   expose :question, -> { Question.find(params[:question_id]) }
 
   def create
@@ -35,6 +35,6 @@ class AnswersController < ApplicationController
   private
 
   def answer_params
-    params.require(:answer).permit(:body)
+    params.require(:answer).permit(:body, files: [])
   end
 end
