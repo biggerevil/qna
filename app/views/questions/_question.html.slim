@@ -1,5 +1,10 @@
 h1= question.title
 p= question.body
+
+- if question.files.attached?
+  - question.files.each do |file|
+    p= link_to file.filename.to_s, url_for(file)
+
 - if current_user&.author_of?(question)
   = link_to 'Delete question', question_path(question), method: :delete
   '
@@ -9,8 +14,14 @@ p= question.body
     = render 'shared/errors', resource: question
 
   = form_with model: question, local: false, class: 'hidden', html: { id: "edit-question-#{question.id}" } do |f|
-    = f.label :title, 'Question title'
-    = f.text_area :title
-    = f.label :body, 'Question body'
-    = f.text_area :body
+    p
+      = f.label :title, 'Question title'
+      = f.text_area :title
+    p
+      = f.label :body, 'Question body'
+      = f.text_area :body
+    p
+      = f.label :files
+      = f.file_field :files, multiple: true
+
     = f.submit 'Save'

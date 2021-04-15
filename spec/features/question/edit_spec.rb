@@ -18,7 +18,7 @@ describe 'User can edit its question', "
       click_on 'Edit question'
     end
 
-    it 'edits its answer' do
+    it 'edits its question' do
       within '.question' do
         fill_in 'Question title', with: 'Edited title'
         fill_in 'Question body', with: 'Edited body'
@@ -33,7 +33,7 @@ describe 'User can edit its question', "
       end
     end
 
-    it 'edits its answer with errors' do
+    it 'edits its question with errors' do
       within '.question' do
         fill_in 'Question title', with: ''
         fill_in 'Question body', with: ''
@@ -43,6 +43,20 @@ describe 'User can edit its question', "
         expect(page).to have_content question.title
         expect(page).to have_content question.body
         expect(page).to have_selector 'textarea'
+      end
+    end
+
+    it 'edits its question and adds files' do
+      within '.question' do
+        fill_in 'Question title', with: 'Edited title'
+        attach_file 'Files',
+                    ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+
+        click_on 'Save'
+
+        expect(page).to have_content 'Edited title'
+        expect(page).to have_link 'rails_helper.rb'
+        expect(page).to have_link 'spec_helper.rb'
       end
     end
   end
