@@ -9,4 +9,6 @@ Rails.application.routes.draw do
       patch :make_best, on: :member
     end
   end
+
+  resources :files, only: :destroy
 end
