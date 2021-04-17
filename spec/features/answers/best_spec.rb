@@ -48,7 +48,7 @@ describe 'User can choose answer as best', "
 
       visit question_path(question)
 
-      first_element = find('.answers').first('p')
+      first_element = find('.answers').first('div')
       expect(first_element[:id]).to eq "answer-#{first_answer.id}"
     end
   end

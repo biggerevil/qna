@@ -11,6 +11,10 @@ class QuestionsController < ApplicationController
     question.links.build
   end
 
+  def show
+    answer.links.build
+  end
+
   def create
     current_user.questions.push(question)
 
