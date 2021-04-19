@@ -11,13 +11,8 @@ div id="answer-#{answer.id}"
           '
     br
   '
-  .links
-    - if answer.links.present? && answer.persisted?
-      p Links:
-      ul
-        - answer.links.each do |link|
-          - puts "Outputting link"
-          li= link_to link.name, link.url
+  = render partial: 'links/links', locals: { resource: answer }
+
   - if current_user&.author_of?(answer)
     = link_to 'Delete answer', answer_path(answer), method: :delete, remote: true
     '

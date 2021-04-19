@@ -10,12 +10,7 @@ p= question.body
         - if current_user&.author_of?(question)
           = link_to 'Delete file', file_path(file), method: :delete, remote: true
 
-.links
-  - if question.links.present?
-    p Links:
-    ul
-      - question.links.each do |link|
-        li= link_to link.name, link.url
+= render partial: 'links/links', locals: { resource: question }
 
 - if current_user&.author_of?(question)
 
