@@ -6,22 +6,47 @@ describe 'User can add links to question', "
   In order to provide additional info to my question
   As an question's author
   I'd like to be able to add links
-" do
+", js: true do
   let(:user) { create(:user) }
-  let(:gist_url) { 'https://gist.github.com/biggerevil/dd356cdb2c99455b4646f4a3a6c2cad7' }
+  let(:google_url) { 'https://google.com' }
+  let(:yandex_url) { 'https://yandex.com' }
 
-  it 'User adds link when asks question' do
+  before do
     sign_in(user)
     visit new_question_path
+  end
 
+  it 'User adds link when asks question' do
     fill_in 'Title', with: 'Test question'
     fill_in 'Body', with: 'text text text'
 
-    fill_in 'Link name', with: 'My gist'
-    fill_in 'Url', with: gist_url
+    fill_in 'Name', with: 'Google'
+    fill_in 'Url', with: google_url
 
     click_on 'Ask'
 
-    expect(page).to have_link 'My gist', href: gist_url
+    expect(page).to have_link 'Google', href: google_url
+  end
+
+  it 'User adds several links when asks question' do
+    fill_in 'Title', with: 'Test question'
+    fill_in 'Body', with: 'text text text'
+
+    within '.nested-fields' do
+      fill_in 'Name', with: 'Google'
+      fill_in 'Url', with: google_url
+    end
+
+    click_on 'Add link'
+
+    within all('.nested-fields').last do
+      fill_in 'Name', with: 'Yandex'
+      fill_in 'Url', with: yandex_url
+    end
+
+    click_on 'Ask'
+
+    expect(page).to have_link 'Google', href: google_url
+    expect(page).to have_link 'Yandex', href: yandex_url
   end
 end

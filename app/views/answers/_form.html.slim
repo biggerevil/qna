@@ -8,13 +8,9 @@
     = a.file_field :files, multiple: true, direct_upload: true
 
   p Links:
-  p
-    = a.fields_for :links do |l|
-      p
-        = l.label :name, 'Link name'
-        = l.text_field :name
-      p
-        = l.label :url
-        = l.text_field :url
+  p= a.fields_for :links do |link|
+    = render 'shared/links_form', f: link
+  .links
+    = link_to_add_association 'Add link', a, :links, partial: 'shared/links_form'
 
   p= a.submit
