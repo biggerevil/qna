@@ -50,4 +50,23 @@ describe 'User can add links to answer', "
       expect(page).to have_link 'Yandex', href: yandex_url
     end
   end
+
+  context 'User enters link with wrong format' do
+    before do
+      fill_in 'Body', with: 'Answer with wrong link format'
+
+      fill_in 'Name', with: 'Wrong link'
+      fill_in 'Url', with: 'url_in_wrong_format'
+
+      click_on 'Create Answer'
+    end
+
+    it 'Answer with wrong link is not shown on page' do
+      expect(page).not_to have_link 'Wrong link', href: google_url
+    end
+
+    it 'Mistake about wrong format is shown' do
+      expect(page).to have_content 'Links url is invalid'
+    end
+  end
 end

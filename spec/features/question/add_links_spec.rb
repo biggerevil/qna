@@ -49,4 +49,24 @@ describe 'User can add links to question', "
     expect(page).to have_link 'Google', href: google_url
     expect(page).to have_link 'Yandex', href: yandex_url
   end
+
+  context 'User enters link with wrong format' do
+    before do
+      fill_in 'Title', with: 'Test question'
+      fill_in 'Body', with: 'text text text'
+
+      fill_in 'Name', with: 'Wrong link'
+      fill_in 'Url', with: 'url_in_wrong_format'
+
+      click_on 'Ask'
+    end
+
+    it 'User stays on page with new question' do
+      expect(page).to have_button 'Ask'
+    end
+
+    it 'Mistake about wrong format is shown' do
+      expect(page).to have_content 'Links url is invalid'
+    end
+  end
 end
