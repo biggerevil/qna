@@ -18,12 +18,12 @@ describe 'User can add links to answer', "
   end
 
   it 'User adds link when give an answer', js: true do
-    fill_in 'Body', with: 'My answer'
+    fill_in 'Your answer', with: 'My answer'
 
     fill_in 'Name', with: 'Google'
     fill_in 'Url', with: google_url
 
-    click_on 'Create'
+    click_on 'Create Answer'
 
     within '.answers' do
       expect(page).to have_link 'Google', href: google_url
@@ -31,7 +31,7 @@ describe 'User can add links to answer', "
   end
 
   it 'User adds several links when gives an answer' do
-    fill_in 'Body', with: 'My answer'
+    fill_in 'Your answer', with: 'My answer'
 
     fill_in 'Name', with: 'Google'
     fill_in 'Url', with: google_url
@@ -43,7 +43,7 @@ describe 'User can add links to answer', "
       fill_in 'Url', with: yandex_url
     end
 
-    click_on 'Create'
+    click_on 'Create Answer'
 
     within '.answers' do
       expect(page).to have_link 'Google', href: google_url
@@ -53,7 +53,7 @@ describe 'User can add links to answer', "
 
   context 'User enters link with wrong format' do
     before do
-      fill_in 'Body', with: 'Answer with wrong link format'
+      fill_in 'Your answer', with: 'Answer with wrong link format'
 
       fill_in 'Name', with: 'Wrong link'
       fill_in 'Url', with: 'url_in_wrong_format'

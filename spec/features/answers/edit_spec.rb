@@ -6,7 +6,7 @@ describe 'User can edit his answer', "
   In order to correct mistakes
   As an author of answer
   I'd like ot be able to edit my answer
-" do
+", js: true do
   let!(:user) { create(:user) }
   let!(:question) { create(:question) }
   let!(:answer) { create(:answer, question: question, author: user) }
@@ -17,7 +17,7 @@ describe 'User can edit his answer', "
     expect(page).not_to have_link 'Edit'
   end
 
-  describe 'Authenticated user', js: true do
+  describe 'Authenticated user' do
     context 'Author' do
       before do
         sign_in user

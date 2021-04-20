@@ -1,1 +1,2 @@
-= render 'form'
+= form_with model: [question, answer], local: false, class: 'new-answer' do |a|
+  = render 'answers/form', a: a, answer: answer
