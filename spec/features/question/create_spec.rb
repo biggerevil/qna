@@ -6,7 +6,7 @@ describe 'User can create question', "
   In order to get answer from a community
   As an authenticated user
   I'd like to be able to ask the question
-" do
+", js: true do
   let(:user) { create(:user) }
 
   describe 'Authenticated user' do
@@ -16,6 +16,8 @@ describe 'User can create question', "
       visit questions_path
       click_on 'Ask question'
     end
+
+    let(:gists_url) { 'https://gist.github.com/biggerevil/dd356cdb2c99455b4646f4a3a6c2cad7' }
 
     it 'asks a question' do
       fill_in 'Title', with: 'Test question'
@@ -43,6 +45,19 @@ describe 'User can create question', "
 
       expect(page).to have_link 'rails_helper.rb'
       expect(page).to have_link 'spec_helper.rb'
+    end
+
+    it 'asks a question with gist link' do
+      fill_in 'Title', with: 'Test question'
+      fill_in 'Body', with: 'text text text'
+
+      fill_in 'Name', with: 'Gist'
+      fill_in 'Url', with: gists_url
+
+      click_on 'Ask'
+
+      expect(page).to have_link 'Gist', href: gists_url
+      expect(page).to have_content 'me am gist'
     end
   end
 
