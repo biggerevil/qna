@@ -32,14 +32,14 @@ describe 'User can add links to question', "
     fill_in 'Title', with: 'Test question'
     fill_in 'Body', with: 'text text text'
 
-    within '.nested-fields' do
+    within '.nested-fields-for-link' do
       fill_in 'Name', with: 'Google'
       fill_in 'Url', with: google_url
     end
 
     click_on 'Add link'
 
-    within all('.nested-fields').last do
+    within all('.nested-fields-for-link').last do
       fill_in 'Name', with: 'Yandex'
       fill_in 'Url', with: yandex_url
     end

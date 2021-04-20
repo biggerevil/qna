@@ -59,6 +59,43 @@ describe 'User can create question', "
       expect(page).to have_link 'Gist', href: gists_url
       expect(page).to have_content 'me am gist'
     end
+
+    describe 'asks a question and creates badge' do
+      it 'without errors' do
+        fill_in 'Title', with: 'Test question'
+        fill_in 'Body', with: 'text text text'
+
+        fill_in 'Badge title', with: 'Badge title for you'
+        attach_file 'Image', "#{Rails.root}/spec/support/image.jpg"
+
+        click_on 'Ask'
+
+        expect(page).to have_link 'Reward image'
+        expect(page).to have_content 'Badge title'
+      end
+
+      it 'with blank title' do
+        fill_in 'Title', with: 'Test question'
+        fill_in 'Body', with: 'text text text'
+
+        attach_file 'Image', "#{Rails.root}/spec/support/image.jpg"
+
+        click_on 'Ask'
+
+        expect(page).to have_content "Badge title can't be blank"
+      end
+
+      it 'with blank image' do
+        fill_in 'Title', with: 'Test question'
+        fill_in 'Body', with: 'text text text'
+
+        fill_in 'Badge title', with: 'Badge title for you'
+
+        click_on 'Ask'
+
+        expect(page).to have_content "Badge image can't be blank"
+      end
+    end
   end
 
   it 'Unauthenticated user tries to ask a question' do

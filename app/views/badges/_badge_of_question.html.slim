@@ -1,0 +1,4 @@
+- if question.badge.present?
+  b Badge:
+  p= question.badge.title
+  p= link_to 'Reward image', url_for(question.badge.image)

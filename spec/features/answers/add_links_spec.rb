@@ -38,7 +38,7 @@ describe 'User can add links to answer', "
 
     click_on 'Add link'
 
-    within all('.nested-fields').last do
+    within all('.nested-fields-for-link').last do
       fill_in 'Name', with: 'Yandex'
       fill_in 'Url', with: yandex_url
     end

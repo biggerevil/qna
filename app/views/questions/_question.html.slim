@@ -12,6 +12,8 @@ p= question.body
 
 = render partial: 'links/links', locals: { resource: question }
 
+= render partial: 'badges/badge_of_question', locals: { resource: question }
+
 - if current_user&.author_of?(question)
 
   = link_to 'Delete question', question_path(question), method: :delete

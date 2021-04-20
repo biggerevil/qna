@@ -15,6 +15,11 @@ p = f.fields_for :links do |link_form|
 .links
   = link_to_add_association 'Add link', f, :links, partial: 'shared/links_form'
 
+- unless question.persisted?
+  p Badge:
+  p = f.fields_for :badge do |badge_form|
+    = render 'badges/form', f: badge_form
+
 - if question.persisted?
   p= f.submit 'Save'
 - else
