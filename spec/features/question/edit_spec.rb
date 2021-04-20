@@ -20,8 +20,8 @@ describe 'User can edit its question', "
 
     it 'edits its question' do
       within '.question' do
-        fill_in 'Question title', with: 'Edited title'
-        fill_in 'Question body', with: 'Edited body'
+        fill_in 'Title', with: 'Edited title'
+        fill_in 'Body', with: 'Edited body'
 
         click_on 'Save'
 
@@ -35,8 +35,8 @@ describe 'User can edit its question', "
 
     it 'edits its question with errors' do
       within '.question' do
-        fill_in 'Question title', with: ''
-        fill_in 'Question body', with: ''
+        fill_in 'Title', with: ''
+        fill_in 'Body', with: ''
 
         click_on 'Save'
 
@@ -48,7 +48,7 @@ describe 'User can edit its question', "
 
     it 'edits its question and adds files' do
       within '.question' do
-        fill_in 'Question title', with: 'Edited title'
+        fill_in 'Title', with: 'Edited title'
         attach_file 'Files',
                     ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
 
@@ -57,6 +57,22 @@ describe 'User can edit its question', "
         expect(page).to have_content 'Edited title'
         expect(page).to have_link 'rails_helper.rb'
         expect(page).to have_link 'spec_helper.rb'
+      end
+    end
+
+    it 'edits its question and adds links' do
+      within '.question' do
+        fill_in 'Title', with: 'Question with link'
+
+        click_on 'Add link'
+
+        fill_in 'Name', with: 'Bing'
+        fill_in 'Url', with: 'https://bing.com'
+
+        click_on 'Save'
+
+        expect(page).to have_content 'Question with link'
+        expect(page).to have_link 'Bing', href: 'https://bing.com'
       end
     end
   end

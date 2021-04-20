@@ -1,0 +1,21 @@
+p
+  = f.label :title
+  = f.text_field :title
+  p
+    = f.label :body
+    = f.text_area :body
+
+  p
+    = f.label :files
+    = f.file_field :files, multiple: true, direct_upload: true
+
+  p Links:
+  p = f.fields_for :links do |link_form|
+    = render 'shared/links_form', f: link_form
+  .links
+    = link_to_add_association 'Add link', f, :links, partial: 'shared/links_form'
+
+  - if question.persisted?
+    p= f.submit 'Save'
+  - else
+    p= f.submit 'Ask'

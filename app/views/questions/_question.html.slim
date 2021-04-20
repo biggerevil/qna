@@ -22,14 +22,4 @@ p= question.body
     = render 'shared/errors', resource: question
 
   = form_with model: question, local: false, class: 'hidden', html: { id: "edit-question-#{question.id}" } do |f|
-    p
-      = f.label :title, 'Question title'
-      = f.text_area :title
-    p
-      = f.label :body, 'Question body'
-      = f.text_area :body
-    p
-      = f.label :files
-      = f.file_field :files, multiple: true, direct_upload: true
-
-    = f.submit 'Save'
+    = render 'questions/form', f: f, question: question
