@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_20_193415) do
+ActiveRecord::Schema.define(version: 2021_04_21_093757) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,15 @@ ActiveRecord::Schema.define(version: 2021_04_20_193415) do
     t.index ["author_id"], name: "index_questions_on_author_id"
   end
 
+  create_table "user_badges", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "badge_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["badge_id"], name: "index_user_badges_on_badge_id"
+    t.index ["user_id"], name: "index_user_badges_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -99,4 +108,6 @@ ActiveRecord::Schema.define(version: 2021_04_20_193415) do
   add_foreign_key "answers", "users", column: "author_id"
   add_foreign_key "badges", "questions"
   add_foreign_key "questions", "users", column: "author_id"
+  add_foreign_key "user_badges", "badges"
+  add_foreign_key "user_badges", "users"
 end

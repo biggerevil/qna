@@ -26,9 +26,9 @@ class AnswersController < ApplicationController
   end
 
   def make_best
-    return head 403 unless current_user.author_of?(answer)
-
     @question = answer.question
+    return head 403 unless current_user.author_of?(@question)
+
     answer.make_best
   end
 

@@ -17,8 +17,13 @@ class Answer < ApplicationRecord
     previous_best = question.best_answer
 
     Answer.transaction do
-      previous_best&.update!(best: false)
+      if previous_best&.persisted?
+        previous_best.update!(best: false)
+        previous_best.author.badges.delete(question.badge) unless question.badge.nil?
+      end
+
       update!(best: true)
+      author.badges << question.badge unless question.badge.nil?
     end
   end
 end
