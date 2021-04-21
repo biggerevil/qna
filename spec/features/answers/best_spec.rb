@@ -55,6 +55,7 @@ describe 'User can choose answer as best', "
 
   context 'Not author' do
     let(:user) { create(:user) }
+    let!(:not_q_auth_answer) { create(:answer, body: 'My answer', author: user, question: question) }
 
     before { sign_in(user) }
 
