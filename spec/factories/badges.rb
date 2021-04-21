@@ -2,6 +2,7 @@
 
 FactoryBot.define do
   factory :badge do
+    question
     title { 'Badge Title!' }
     after(:build) do |badge|
       badge.image.attach(io: File.open("#{Rails.root}/spec/support/image.jpg"),
