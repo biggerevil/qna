@@ -26,15 +26,15 @@ class AnswersController < ApplicationController
   end
 
   def make_best
-    return head 403 unless current_user.author_of?(answer)
-
     @question = answer.question
+    return head 403 unless current_user.author_of?(@question)
+
     answer.make_best
   end
 
   private
 
   def answer_params
-    params.require(:answer).permit(:body, files: [], links_attributes: %i[name url])
+    params.require(:answer).permit(:body, files: [], links_attributes: %i[name url _destroy id])
   end
 end

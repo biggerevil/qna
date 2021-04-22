@@ -1,0 +1,8 @@
+.nested-fields
+  .field
+    = f.label :title, 'Badge title'
+    = f.text_field :title
+  .field
+    = f.label :image
+    = f.file_field :image
+  = link_to_remove_association "Remove badge", f

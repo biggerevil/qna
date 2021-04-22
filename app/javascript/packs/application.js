@@ -14,3 +14,6 @@ ActiveStorage.start()
 require('jquery')
 require("packs/answers")
 require("packs/questions")
+
+// For nested forms
+require("@nathanvda/cocoon")

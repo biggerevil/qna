@@ -9,6 +9,7 @@ class QuestionsController < ApplicationController
 
   def new
     question.links.build
+    question.build_badge
   end
 
   def show
@@ -45,6 +46,8 @@ class QuestionsController < ApplicationController
   private
 
   def question_params
-    params.require(:question).permit(:title, :body, files: [], links_attributes: %i[name url])
+    params.require(:question).permit(:title, :body, files: [],
+                                                    links_attributes: %i[name url _destroy id],
+                                                    badge_attributes: %i[title image _destroy id])
   end
 end

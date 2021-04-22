@@ -1,0 +1,6 @@
+h3= badge.title
+p
+  'Badge for question:
+  = link_to "#{badge.question.title}", question_path(badge.question)
+  br
+  = link_to 'Badge image', url_for(badge.image)

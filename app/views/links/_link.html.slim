@@ -1,0 +1,11 @@
+li id="link_#{link.id}"
+  - if link.is_gist?
+    - get_gist_files(link.url).each do |filename, gist_data|
+      = link_to link.name, link.url
+      ':
+      = gist_data[:content]
+  - else
+    = link_to link.name, link.url
+  '
+  - if current_user.author_of?(link.linkable)
+    = link_to 'Delete link', link_path(link), method: :delete, remote: true

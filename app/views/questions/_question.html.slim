@@ -10,12 +10,9 @@ p= question.body
         - if current_user&.author_of?(question)
           = link_to 'Delete file', file_path(file), method: :delete, remote: true
 
-.links
-  - if question.links.present?
-    p Links:
-    ul
-      - question.links.each do |link|
-        li= link_to link.name, link.url
+= render partial: 'links/links', locals: { resource: question }
+
+= render partial: 'badges/badge_of_question', locals: { resource: question }
 
 - if current_user&.author_of?(question)
 
@@ -27,14 +24,4 @@ p= question.body
     = render 'shared/errors', resource: question
 
   = form_with model: question, local: false, class: 'hidden', html: { id: "edit-question-#{question.id}" } do |f|
-    p
-      = f.label :title, 'Question title'
-      = f.text_area :title
-    p
-      = f.label :body, 'Question body'
-      = f.text_area :body
-    p
-      = f.label :files
-      = f.file_field :files, multiple: true, direct_upload: true
-
-    = f.submit 'Save'
+    = render 'questions/form', f: f, question: question

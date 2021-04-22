@@ -11,31 +11,20 @@ div id="answer-#{answer.id}"
           '
     br
   '
-  .links
-    - if answer.links.present? && answer.persisted?
-      p Links:
-      ul
-        - answer.links.each do |link|
-          - puts "Outputting link"
-          li= link_to link.name, link.url
+  = render partial: 'links/links', locals: { resource: answer }
+
+  - if answer.best?
+    b= 'Best'
+    '
+
+  - if current_user&.author_of?(answer.question) and answer.persisted? and not answer.best?
+    = link_to 'Make best', make_best_answer_path(answer), method: :patch, remote: true
+    '
+
   - if current_user&.author_of?(answer)
     = link_to 'Delete answer', answer_path(answer), method: :delete, remote: true
     '
     = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
     '
-    - if answer.best?
-      b= 'Best'
-    - else
-      = link_to 'Make best', make_best_answer_path(answer), method: :patch, remote: true
-
     = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
-      p
-        = f.label :body, 'Your answer'
-        = f.text_area :body
-
-      p
-        = f.label :files
-        = f.file_field :files, multiple: true, direct_upload: true
-
-      p
-        = f.submit 'Save'
+      = render 'answers/form', a: f, answer: answer

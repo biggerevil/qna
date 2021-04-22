@@ -20,6 +20,11 @@ RSpec.describe Answer, type: :model do
     let(:first_answer) { create(:answer, author: author, question: question) }
     let(:second_answer) { create(:answer, author: author, question: question) }
 
+    let(:question_with_badge) do
+      create(:question, author: author, badge: create(:badge, question: question))
+    end
+    let!(:answer_of_q_w_badge) { create(:answer, author: author, question: question_with_badge) }
+
     it 'makes answer best' do
       first_answer.make_best
 
@@ -34,6 +39,12 @@ RSpec.describe Answer, type: :model do
 
       expect(second_answer).to be_best
       expect(first_answer).not_to be_best
+    end
+
+    it 'author of best answer gets badge' do
+      answer_of_q_w_badge.make_best
+
+      expect(answer_of_q_w_badge.author.badges.first.title).to eq 'Badge Title!'
     end
   end
 end

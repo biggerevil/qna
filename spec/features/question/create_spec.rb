@@ -6,7 +6,7 @@ describe 'User can create question', "
   In order to get answer from a community
   As an authenticated user
   I'd like to be able to ask the question
-" do
+", js: true do
   let(:user) { create(:user) }
 
   describe 'Authenticated user' do
@@ -16,6 +16,8 @@ describe 'User can create question', "
       visit questions_path
       click_on 'Ask question'
     end
+
+    let(:gists_url) { 'https://gist.github.com/biggerevil/dd356cdb2c99455b4646f4a3a6c2cad7' }
 
     it 'asks a question' do
       fill_in 'Title', with: 'Test question'
@@ -43,6 +45,56 @@ describe 'User can create question', "
 
       expect(page).to have_link 'rails_helper.rb'
       expect(page).to have_link 'spec_helper.rb'
+    end
+
+    it 'asks a question with gist link' do
+      fill_in 'Title', with: 'Test question'
+      fill_in 'Body', with: 'text text text'
+
+      fill_in 'Name', with: 'Gist'
+      fill_in 'Url', with: gists_url
+
+      click_on 'Ask'
+
+      expect(page).to have_link 'Gist', href: gists_url
+      expect(page).to have_content 'me am gist'
+    end
+
+    describe 'asks a question and creates badge' do
+      it 'without errors' do
+        fill_in 'Title', with: 'Test question'
+        fill_in 'Body', with: 'text text text'
+
+        fill_in 'Badge title', with: 'Badge title for you'
+        attach_file 'Image', "#{Rails.root}/spec/support/image.jpg"
+
+        click_on 'Ask'
+
+        expect(page).to have_link 'Reward image'
+        expect(page).to have_content 'Badge title'
+      end
+
+      it 'with blank title' do
+        fill_in 'Title', with: 'Test question'
+        fill_in 'Body', with: 'text text text'
+
+        attach_file 'Image', "#{Rails.root}/spec/support/image.jpg"
+
+        click_on 'Ask'
+
+        expect(page).to have_content "Badge title can't be blank"
+      end
+
+      it 'with blank image' do
+        fill_in 'Title', with: 'Test question'
+        fill_in 'Body', with: 'text text text'
+
+        fill_in 'Badge title', with: 'Badge title for you'
+
+        click_on 'Ask'
+
+        expect(page).to have_content "Badge image can't be blank"
+      end
     end
   end
 
