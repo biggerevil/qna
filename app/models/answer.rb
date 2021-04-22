@@ -23,7 +23,7 @@ class Answer < ApplicationRecord
       end
 
       update!(best: true)
-      author.badges << question.badge unless question.badge.nil?
+      question.badge&.update!(user: author)
     end
   end
 end
