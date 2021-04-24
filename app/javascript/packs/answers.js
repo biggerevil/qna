@@ -10,6 +10,11 @@ $(document).on('turbolinks:load', function(){
         let xhr = e.detail[2];
 
         $('.answers').append(xhr.responseText);
+        $('.answer-errors').val('');
+        $('.new-answer #answer_body').val('');
+        $('.new-answer #answer_files').val('');
+        $('.new-answer #answer_links_attributes_0_name').val('');
+        $('.new-answer #answer_links_attributes_0_url').val('');
     })
         .on('ajax:error', function(e) {
             let xhr = e.detail[2];
