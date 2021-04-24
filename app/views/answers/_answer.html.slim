@@ -1,7 +1,7 @@
 div id="answer-#{answer.id}"
   = answer.body
-  br
   - if answer.files.attached?
+    br
     - answer.files.each do |file|
       span id="file-#{file.id}"
         = link_to file.filename.to_s, url_for(file)

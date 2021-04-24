@@ -9,5 +9,5 @@ br
 h3= 'Create new answer'
 .answer-errors
   = render 'shared/errors', resource: answer
-= form_with model: [question, answer], local: false, class: 'new-answer' do |a|
+= form_with model: [question, answer], local: false, class: 'new-answer', data: { type: :html } do |a|
   = render 'answers/form', a: a, answer: answer
