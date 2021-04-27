@@ -7,9 +7,9 @@ $(document).on('turbolinks:load', function(){
     })
 
     $('form.new-answer').on('ajax:success', function(e) {
-        let xhr = e.detail[2];
+        let answer = e.detail[0];
 
-        $('.answers').append(xhr.responseText);
+        $('.answers').append('<p>' + answer.body + '</p>');
         $('.answer-errors').val('');
         $('.new-answer #answer_body').val('');
         $('.new-answer #answer_files').val('');
@@ -17,8 +17,10 @@ $(document).on('turbolinks:load', function(){
         $('.new-answer #answer_links_attributes_0_url').val('');
     })
         .on('ajax:error', function(e) {
-            let xhr = e.detail[2];
+            let errors = e.detail[0];
 
-            $('.answer-errors').html(xhr.responseText);
+            $.each(errors, function(index, value) {
+                $('.answer-errors').append('<p>' + value + '</p>');
+            })
         })
 });
