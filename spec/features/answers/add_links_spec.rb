@@ -25,6 +25,9 @@ describe 'User can add links to answer', "
 
     click_on 'Create Answer'
 
+    # As long as I don't change json rendering answer
+    visit question_path(question)
+
     within '.answers' do
       expect(page).to have_link 'Google', href: google_url
     end
@@ -44,6 +47,9 @@ describe 'User can add links to answer', "
     end
 
     click_on 'Create Answer'
+
+    # As long as I don't change json rendering answer
+    visit question_path(question)
 
     within '.answers' do
       expect(page).to have_link 'Google', href: google_url

@@ -13,14 +13,8 @@ RSpec.describe AnswersController, type: :controller do
       it 'saves a new answer to database' do
         expect do
           post :create,
-               params: { question_id: question.id, answer: attributes_for(:answer) }, format: :js
+               params: { question_id: question.id, answer: attributes_for(:answer) }, format: :json
         end.to change(question.answers, :count).by(1)
-      end
-
-      it 'renders create template' do
-        post :create, params: { question_id: question.id, answer: attributes_for(:answer) },
-                      format: :js
-        expect(response).to render_template :create
       end
     end
 
@@ -28,14 +22,8 @@ RSpec.describe AnswersController, type: :controller do
       it 'does not save the answer' do
         expect do
           post :create,
-               params: { question_id: question.id, answer: attributes_for(:answer, :invalid) }, format: :js
+               params: { question_id: question.id, answer: attributes_for(:answer, :invalid) }, format: :json
         end.not_to change(Answer, :count)
-      end
-
-      it 'renders create template' do
-        post :create,
-             params: { question_id: question.id, answer: attributes_for(:answer, :invalid) }, format: :js
-        expect(response).to render_template :create
       end
     end
   end
