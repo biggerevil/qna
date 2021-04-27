@@ -38,7 +38,7 @@ describe 'User can create answer', "
 
       # It is required to wait because other way
       # files won't be loaded
-      sleep(inspection_time=3)
+      sleep(inspection_time = 3)
       # As long as I don't change json rendering answer
       visit question_path(question)
 
