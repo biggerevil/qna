@@ -3,6 +3,8 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
 
+  include Voted
+
   expose :questions, -> { Question.all }
   expose :question, scope: -> { Question.with_attached_files }
   expose :answer, -> { question.answers.new }

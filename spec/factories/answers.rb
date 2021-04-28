@@ -7,7 +7,7 @@ FactoryBot.define do
 
   factory :answer do
     body { generate(:answer_body) }
-    question { nil }
+    question
     author { association :user }
 
     trait :invalid do

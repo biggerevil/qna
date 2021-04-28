@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require Rails.root.join('spec/controllers/concerns/voted_spec.rb')
 
 RSpec.describe QuestionsController, type: :controller do
   let(:author) { create(:user) }
 
   before { sign_in(author) }
+
+  it_behaves_like 'voted'
 
   describe 'GET #new' do
     it 'question has links created' do

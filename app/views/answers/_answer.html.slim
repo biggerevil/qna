@@ -28,3 +28,14 @@ div id="answer-#{answer.id}"
     '
     = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
       = render 'answers/form', a: f, answer: answer
+
+
+  div id="answer-#{answer.id}-votes"
+    div id="answer-#{answer.id}-votes-errors"
+    - if answer.persisted?
+      ' Rating:
+      = show_rating_of(answer)
+      - unless current_user.nil?
+        - unless current_user&.author_of?(answer)
+          .links_for_voting
+            = add_vote_links_to(answer)

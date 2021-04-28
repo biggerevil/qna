@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require Rails.root.join('spec/models/concerns/votable_spec.rb')
 
 RSpec.describe Question, type: :model do
+  it_behaves_like 'votable'
+
   it { is_expected.to have_many(:answers).dependent(:destroy) }
   it { is_expected.to have_many(:links).dependent(:destroy) }
   it { is_expected.to belong_to(:author).class_name('User') }
