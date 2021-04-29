@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class AnswersController < ApplicationController
-  include Voted
-
   before_action :authenticate_user!
+
+  include Voted
 
   expose :answer, scope: -> { Answer.with_attached_files }
   expose :question, -> { Question.find(params[:question_id]) }
