@@ -5,8 +5,7 @@ class Vote < ApplicationRecord
   belongs_to :user
 
   validates :user, :votable, presence: true
-  validates :value, inclusion: { in: -1..1 }, presence: true
-  # validates numericality: { only_integer: true }
+  validates :value, inclusion: { in: [-1, 1] }, presence: true
   validate :author_cannot_vote
 
   private

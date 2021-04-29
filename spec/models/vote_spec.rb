@@ -9,5 +9,5 @@ RSpec.describe Vote, type: :model do
   it { is_expected.to validate_presence_of :user }
   it { is_expected.to validate_presence_of :votable }
   it { is_expected.to validate_presence_of :value }
-  it { is_expected.to validate_inclusion_of(:value).in_range(-1..1) }
+  it { is_expected.to validate_inclusion_of(:value).in_array([-1, 1]) }
 end
