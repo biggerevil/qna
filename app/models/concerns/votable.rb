@@ -8,12 +8,6 @@ module Votable
   end
 
   def rating
-    sum = 0
-
-    votes.each do |vote|
-      sum += vote.value
-    end
-
-    sum
+    votes.sum(:value)
   end
 end
