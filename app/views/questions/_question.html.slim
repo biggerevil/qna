@@ -25,3 +25,12 @@ p= question.body
 
   = form_with model: question, local: false, class: 'hidden', html: { id: "edit-question-#{question.id}" } do |f|
     = render 'questions/form', f: f, question: question
+
+div id="question-#{question.id}-votes"
+  div id="question-#{question.id}-votes-errors"
+  ' Rating:
+  = show_rating_of(question)
+  - unless current_user.nil?
+    - unless current_user&.author_of?(question)
+      .links_for_voting
+        = add_vote_links_to(question)

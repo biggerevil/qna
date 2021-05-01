@@ -3,3 +3,7 @@ Metrics/LineLength:
 require:
   - rubocop-rails
   - rubocop-rspec
+Rails/ContentTag:
+  Enabled: false
+Style/StringConcatenation:
+  Enabled: false

@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_many :answers, dependent: :destroy, foreign_key: 'author_id'
   has_many :user_badges, dependent: :destroy
   has_many :badges, through: :user_badges
+  has_many :votes, dependent: :destroy
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
