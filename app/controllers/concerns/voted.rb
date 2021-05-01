@@ -15,7 +15,7 @@ module Voted
                      rating: @votable.rating, has_vote: true }
     else
       render json: { id: @votable.id, model_name: @votable.class.to_s.downcase, errors: vote.errors.full_messages },
-                  status: :unprocessable_entity
+             status: :unprocessable_entity
     end
   end
 
@@ -27,7 +27,7 @@ module Voted
                      rating: @votable.rating, has_vote: true }
     else
       render json: { id: @votable.id, model_name: @votable.class.to_s.downcase, errors: vote.errors.full_messages },
-                 status: :unprocessable_entity
+             status: :unprocessable_entity
     end
   end
 

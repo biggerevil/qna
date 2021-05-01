@@ -9,9 +9,15 @@ class QuestionsController < ApplicationController
   expose :question, scope: -> { Question.with_attached_files }
   expose :answer, -> { question.answers.new }
 
+  after_action :publish_question, only: [:create]
+
   def new
     question.links.build
     question.build_badge
+  end
+
+  def index
+    gon.current_user = current_user
   end
 
   def show
@@ -51,5 +57,11 @@ class QuestionsController < ApplicationController
     params.require(:question).permit(:title, :body, files: [],
                                                     links_attributes: %i[name url _destroy id],
                                                     badge_attributes: %i[title image _destroy id])
+  end
+
+  def publish_question
+    return if question.errors.any?
+
+    ActionCable.server.broadcast 'questions', question
   end
 end
