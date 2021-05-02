@@ -15,6 +15,7 @@ require('jquery')
 require("packs/answers")
 require("packs/questions")
 require("packs/votes")
+require("handlebars");
 
 // For nested forms
 require("@nathanvda/cocoon")

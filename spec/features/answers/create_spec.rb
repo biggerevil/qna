@@ -46,6 +46,30 @@ describe 'User can create answer', "
       expect(page).to have_link 'rails_helper.rb'
       expect(page).to have_link 'spec_helper.rb'
     end
+
+    describe 'Multiple sessions' do
+      it 'Another user can see created answer without reloading', js: true do
+        Capybara.using_session('another_user') do
+          visit question_path(question)
+        end
+
+        Capybara.using_session('user') do
+          sign_in(user)
+          visit question_path(question)
+
+          within '.new-answer' do
+            fill_in 'Your answer', with: 'Answer of a user'
+            click_on 'Create Answer'
+          end
+
+          expect(page).to have_content 'Answer of a user'
+        end
+
+        Capybara.using_session('another_user') do
+          expect(page).to have_content 'Answer of a user'
+        end
+      end
+    end
   end
 
   context 'Not authenticated user' do

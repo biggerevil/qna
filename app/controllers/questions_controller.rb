@@ -22,6 +22,7 @@ class QuestionsController < ApplicationController
 
   def show
     answer.links.build
+    gon.current_user = current_user
   end
 
   def create
