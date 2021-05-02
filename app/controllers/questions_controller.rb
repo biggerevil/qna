@@ -9,6 +9,7 @@ class QuestionsController < ApplicationController
   expose :question, scope: -> { Question.with_attached_files }
   expose :answer, -> { question.answers.new }
 
+  before_action :set_gon_question_id
   after_action :publish_question, only: [:create]
 
   def new
@@ -58,6 +59,10 @@ class QuestionsController < ApplicationController
     params.require(:question).permit(:title, :body, files: [],
                                                     links_attributes: %i[name url _destroy id],
                                                     badge_attributes: %i[title image _destroy id])
+  end
+
+  def set_gon_question_id
+    gon.question_id = question.id
   end
 
   def publish_question

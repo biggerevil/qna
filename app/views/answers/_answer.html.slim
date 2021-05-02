@@ -29,6 +29,11 @@ div id="answer-#{answer.id}"
     = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
       = render 'answers/form', a: f, answer: answer
 
+  p= 'Comments:'
+  div id="answer-#{answer.id}-comments"
+    = render answer.comments
+  .new-answer-comment
+    = render 'comments/form', commentable: answer
 
   div id="answer-#{answer.id}-votes"
     div id="answer-#{answer.id}-votes-errors"

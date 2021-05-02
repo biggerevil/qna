@@ -14,6 +14,12 @@ p= question.body
 
 = render partial: 'badges/badge_of_question', locals: { question: question }
 
+p= 'Comments:'
+div id="question-#{question.id}-comments"
+  = render question.comments
+.new-question-comment
+  = render 'comments/form', commentable: question
+
 - if current_user&.author_of?(question)
 
   = link_to 'Delete question', question_path(question), method: :delete
