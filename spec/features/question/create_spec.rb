@@ -96,6 +96,32 @@ describe 'User can create question', "
         expect(page).to have_content "Badge image can't be blank"
       end
     end
+
+    describe 'Multiple sessions' do
+      it 'Another user can see created question without reloading', js: true do
+        Capybara.using_session('another_user') do
+          visit questions_path
+        end
+
+        Capybara.using_session('user') do
+          sign_in(user)
+          visit questions_path
+
+          click_on 'Ask question'
+          fill_in 'Title', with: 'Question of user'
+          fill_in 'Body', with: 'Body of question'
+          click_on 'Ask'
+
+          expect(page).to have_content 'Your question was successfully created'
+          expect(page).to have_content 'Question of user'
+          expect(page).to have_content 'Body of question'
+        end
+
+        Capybara.using_session('another_user') do
+          expect(page).to have_content 'Question of user'
+        end
+      end
+    end
   end
 
   it 'Unauthenticated user tries to ask a question' do

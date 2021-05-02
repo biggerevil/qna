@@ -1,0 +1,11 @@
+- if not current_user.nil?
+  - if commentable.persisted?
+    div class="new-#{commentable.class.name.downcase}-comment-errors"
+      = render 'shared/errors', resource: @comment
+
+    .new-comment-form
+      = form_with model: [commentable, Comment.new], local: false do |f|
+        = f.label :body, 'Your comment: '
+        = f.text_field :body
+
+        = f.submit 'Create Comment'

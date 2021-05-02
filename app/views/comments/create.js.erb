@@ -1,0 +1,6 @@
+$('.new-<%= @commentable.class.name.downcase %>-comment-errors').html('<%= render 'shared/errors', resource: @comment %>');
+
+<% unless @comment.errors.present? %>
+$('#<%= @commentable.class.name.downcase %>-<%= @commentable.id %>-comments').append('<%= j render @comment %>');
+$('.new-<%= @commentable.class.name.downcase %>-comment #comment_body').val('');
+<% end %>
