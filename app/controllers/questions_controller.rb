@@ -9,6 +9,8 @@ class QuestionsController < ApplicationController
   expose :question, scope: -> { Question.with_attached_files }
   expose :answer, -> { question.answers.new }
 
+  authorize_resource
+
   before_action :set_gon_question_id
   after_action :publish_question, only: [:create]
 

@@ -11,4 +11,5 @@ table id="questions-table"
         - if current_user&.author_of?(question)
           td= link_to 'Delete question', question_path(question), method: :delete
 
-p= link_to 'Ask question', new_question_path
+- if can?(:create, Question)
+  p= link_to 'Ask question', new_question_path
