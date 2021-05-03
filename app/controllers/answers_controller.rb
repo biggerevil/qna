@@ -5,8 +5,11 @@ class AnswersController < ApplicationController
 
   include Voted
 
-  expose :answer, scope: -> { Answer.with_attached_files }
   expose :question, -> { Question.find(params[:question_id]) }
+
+  before_action :set_answer, except: :create
+
+  authorize_resource
 
   after_action :publish_answer, only: [:create]
 
@@ -25,25 +28,18 @@ class AnswersController < ApplicationController
   end
 
   def update
-    @answer = Answer.find(params[:id])
-    return head 403 unless current_user.author_of?(@answer)
-
     @answer.update(answer_params)
     @question = @answer.question
   end
 
   def destroy
-    return head 403 unless current_user.author_of?(answer)
-
-    @answer = Answer.find(params[:id])
     @answer.destroy
   end
 
   def make_best
-    @question = answer.question
-    return head 403 unless current_user.author_of?(@question)
+    @question = @answer.question
 
-    answer.make_best
+    @answer.make_best
   end
 
   private
@@ -53,8 +49,16 @@ class AnswersController < ApplicationController
   end
 
   def publish_answer
-    return if answer.errors.any?
+    return if @answer.errors.any?
 
     ActionCable.server.broadcast "question_#{@answer.question.id}/answers", answer: @answer
+  end
+
+  def set_answer
+    @answer = Answer.find(params[:id])
+  end
+
+  def set_question
+    @question = answer.question
   end
 end

@@ -7,6 +7,8 @@ class CommentsController < ApplicationController
   before_action :set_gon
   after_action :publish_comment, only: [:create]
 
+  authorize_resource
+
   def new
     @comment = Comment.new
   end

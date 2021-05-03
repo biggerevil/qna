@@ -6,7 +6,7 @@ div id="answer-#{answer.id}"
       span id="file-#{file.id}"
         = link_to file.filename.to_s, url_for(file)
         '
-        - if current_user&.author_of?(answer)
+        - if can? :destroy, file
           = link_to 'Delete file', file_path(file), method: :delete, remote: true
           '
     br
@@ -17,11 +17,11 @@ div id="answer-#{answer.id}"
     b= 'Best'
     '
 
-  - if current_user&.author_of?(answer.question) and answer.persisted? and not answer.best?
+  - if answer.persisted? and (can? :make_best, answer) and not answer.best?
     = link_to 'Make best', make_best_answer_path(answer), method: :patch, remote: true
     '
 
-  - if current_user&.author_of?(answer)
+  - if can? :destroy, answer
     = link_to 'Delete answer', answer_path(answer), method: :delete, remote: true
     '
     = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
@@ -40,7 +40,6 @@ div id="answer-#{answer.id}"
     - if answer.persisted?
       ' Rating:
       = show_rating_of(answer)
-      - unless current_user.nil?
-        - unless current_user&.author_of?(answer)
-          .links_for_voting
-            = add_vote_links_to(answer)
+      - if can? :upvote, answer
+        .links_for_voting
+          = add_vote_links_to(answer)

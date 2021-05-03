@@ -9,6 +9,8 @@ class QuestionsController < ApplicationController
   expose :question, scope: -> { Question.with_attached_files }
   expose :answer, -> { question.answers.new }
 
+  before_action :set_question, only: :update
+
   authorize_resource
 
   before_action :set_gon_question_id
@@ -39,10 +41,6 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    @question = Question.find(params[:id])
-
-    return head 403 unless current_user.author_of?(@question)
-
     @question.update(question_params)
   end
 
@@ -71,5 +69,9 @@ class QuestionsController < ApplicationController
     return if question.errors.any?
 
     ActionCable.server.broadcast 'questions', question
+  end
+
+  def set_question
+    @question = Question.find(params[:id])
   end
 end

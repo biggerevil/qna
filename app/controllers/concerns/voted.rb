@@ -8,6 +8,8 @@ module Voted
   end
 
   def upvote
+    authorize! :upvote, @votable
+
     vote = @votable.votes.new(user_id: current_user.id, value: 1)
 
     if vote.save
@@ -20,6 +22,8 @@ module Voted
   end
 
   def downvote
+    authorize! :downvote, @votable
+
     vote = @votable.votes.new(user: current_user, value: -1)
 
     if vote.save
@@ -32,6 +36,8 @@ module Voted
   end
 
   def cancel_vote
+    authorize! :cancel_vote, @votable
+
     vote = @votable.votes.find_by(user: current_user)
     vote&.destroy
 
