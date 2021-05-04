@@ -7,7 +7,7 @@ p= question.body
       p id="file-#{file.id}"
         = link_to file.filename.to_s, url_for(file)
         '
-        - if current_user&.author_of?(question)
+        - if can? :destroy, file
           = link_to 'Delete file', file_path(file), method: :delete, remote: true
 
 = render partial: 'links/links', locals: { resource: question }
@@ -20,7 +20,7 @@ div id="question-#{question.id}-comments"
 .new-question-comment
   = render 'comments/form', commentable: question
 
-- if current_user&.author_of?(question)
+- if can? :destroy, question
 
   = link_to 'Delete question', question_path(question), method: :delete
   '
@@ -36,7 +36,6 @@ div id="question-#{question.id}-votes"
   div id="question-#{question.id}-votes-errors"
   ' Rating:
   = show_rating_of(question)
-  - unless current_user.nil?
-    - unless current_user&.author_of?(question)
-      .links_for_voting
-        = add_vote_links_to(question)
+  - if can? :upvote, question
+    .links_for_voting
+      = add_vote_links_to(question)

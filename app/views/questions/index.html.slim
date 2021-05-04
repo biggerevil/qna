@@ -8,7 +8,8 @@ table id="questions-table"
     - questions.each do |question|
       tr
         td = link_to "#{question.title}", question_path(question)
-        - if current_user&.author_of?(question)
+        - if can? :destroy, question
           td= link_to 'Delete question', question_path(question), method: :delete
 
-p= link_to 'Ask question', new_question_path
+- if can?(:create, Question)
+  p= link_to 'Ask question', new_question_path

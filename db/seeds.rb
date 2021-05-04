@@ -9,7 +9,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 first_user = User.create!(email: 'we@we.com', password: 'secrete')
-second_user = User.create!(email: 'second@user.com', password: 'secrete')
+second_user = User.create!(email: 'admin@t.com', password: 'secrete', admin: true)
 
 (1..3).each do |i|
   question = Question.new(title: "Question ##{i}", body: "Text of question ##{i}",
