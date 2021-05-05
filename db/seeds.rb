@@ -10,6 +10,7 @@
 
 first_user = User.create!(email: 'we@we.com', password: 'secrete')
 second_user = User.create!(email: 'admin@t.com', password: 'secrete', admin: true)
+third_user = User.create!(email: 'idonothing@user.com', password: 'secrete')
 
 (1..3).each do |i|
   question = Question.new(title: "Question ##{i}", body: "Text of question ##{i}",
