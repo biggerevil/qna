@@ -66,6 +66,15 @@ gem 'handlebars_assets'
 # For authorization
 gem 'cancancan'
 
+# For API
+gem 'doorkeeper'
+
+# Serializer
+gem 'active_model_serializers', '~> 0.10'
+
+# For fast JSON serializing
+gem 'oj'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]

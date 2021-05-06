@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  scope :all_except, ->(id) { where.not(id: id) }
+
   has_many :questions, dependent: :destroy, foreign_key: 'author_id'
   has_many :answers, dependent: :destroy, foreign_key: 'author_id'
   has_many :user_badges, dependent: :destroy

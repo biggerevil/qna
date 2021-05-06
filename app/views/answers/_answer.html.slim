@@ -21,7 +21,7 @@ div id="answer-#{answer.id}"
     = link_to 'Make best', make_best_answer_path(answer), method: :patch, remote: true
     '
 
-  - if can? :destroy, answer
+  - if answer.persisted? && (can? :destroy, answer)
     = link_to 'Delete answer', answer_path(answer), method: :delete, remote: true
     '
     = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
