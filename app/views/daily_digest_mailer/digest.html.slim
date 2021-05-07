@@ -1,0 +1,5 @@
+h1 Daily digest
+p = @greeting + ", that's your daily digest!"
+- Question.all_for_day_before.each do |question|
+  p
+    = link_to question.title, url_for(question)

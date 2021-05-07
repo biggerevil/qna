@@ -32,6 +32,10 @@ div id="question-#{question.id}-comments"
   = form_with model: question, local: false, class: 'hidden', html: { id: "edit-question-#{question.id}" } do |f|
     = render 'questions/form', f: f, question: question
 
+.subscribe-links
+  - if can? :create, Subscription
+    = show_subscription_links(question)
+
 div id="question-#{question.id}-votes"
   div id="question-#{question.id}-votes-errors"
   ' Rating:

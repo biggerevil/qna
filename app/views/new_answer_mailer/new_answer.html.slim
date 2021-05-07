@@ -1,0 +1,9 @@
+h1 New answer
+- if @user.author_of?(@question)
+  p = @greeting + ", you have new answer to your question '#{@question.title}'"
+- else
+  p = @greeting + ", there is new answer to question '#{@question.title}', to which you are subscribed"
+p= link_to 'Have a look!', url_for(@question)
+
+
+

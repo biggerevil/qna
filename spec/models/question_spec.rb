@@ -10,6 +10,7 @@ RSpec.describe Question, type: :model do
 
   it { is_expected.to have_many(:answers).dependent(:destroy) }
   it { is_expected.to have_many(:links).dependent(:destroy) }
+  it { is_expected.to have_many(:subscriptions).dependent(:destroy) }
   it { is_expected.to belong_to(:author).class_name('User') }
   it { is_expected.to have_one(:badge).dependent(:destroy) }
 
@@ -37,6 +38,15 @@ RSpec.describe Question, type: :model do
 
     it 'returns nil if there is no best answer' do
       expect(question.best_answer).to be_nil
+    end
+  end
+
+  describe 'reputation' do
+    let(:question) { build(:question) }
+
+    it 'calls ReputationJob' do
+      expect(ReputationJob).to receive(:perform_later).with(question)
+      question.save!
     end
   end
 end

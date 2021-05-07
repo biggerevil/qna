@@ -16,6 +16,8 @@ class Answer < ApplicationRecord
 
   validates :body, presence: true
 
+  after_create :notify_subscribed
+
   def make_best
     previous_best = question.best_answer
 
@@ -28,5 +30,11 @@ class Answer < ApplicationRecord
       update!(best: true)
       question.badge&.update!(user: author)
     end
+  end
+
+  private
+
+  def notify_subscribed
+    NewAnswerJob.perform_later(self)
   end
 end

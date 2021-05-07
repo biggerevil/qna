@@ -10,6 +10,7 @@ RSpec.describe User, type: :model do
   it { is_expected.to have_many(:user_badges).dependent(:destroy) }
   it { is_expected.to have_many(:badges) }
   it { is_expected.to have_many(:votes).dependent(:destroy) }
+  it { is_expected.to have_many(:subscriptions).dependent(:destroy) }
 
   describe '#author_of?' do
     let(:user) { create(:user) }

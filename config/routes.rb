@@ -1,6 +1,14 @@
 # frozen_string_literal: true
 
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
+  get 'subscriptions/create'
+  get 'subscriptions/destroy'
+  authenticate :user, ->(u) { u.admin? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
   use_doorkeeper
   devise_for :users
   root to: 'questions#index'
@@ -35,6 +43,7 @@ Rails.application.routes.draw do
     end
 
     resources :votes, only: %i[create destroy], shallow: true
+    resources :subscriptions, only: %i[create destroy]
   end
 
   resources :files, only: :destroy

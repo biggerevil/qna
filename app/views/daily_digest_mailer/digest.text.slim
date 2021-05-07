@@ -1,0 +1,8 @@
+' Daily digest
+= "\r\n" * 2
+' #{@greeting + ", that is your daily digest!"}
+- Question.all_for_day_before.each do |question|
+  = "\n\n"
+  = question.title
+  = "\n"
+  = url_for(question)
