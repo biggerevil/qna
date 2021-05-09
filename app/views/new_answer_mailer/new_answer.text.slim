@@ -1,0 +1,10 @@
+' New answer
+= "\r\n" * 2
+- if @user.author_of?(@question)
+  p = @greeting + ", you have new answer to your question #{@question.title}"
+- else
+  p = @greeting + ", there is new answer to question #{@question.title}, to which you are subscribed"
+= "\n\n"
+' Have a look:
+= "\n"
+= url_for(@question)

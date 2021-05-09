@@ -75,6 +75,16 @@ gem 'active_model_serializers', '~> 0.10'
 # For fast JSON serializing
 gem 'oj'
 
+# Backend for background jobs
+gem 'sidekiq'
+# For web-interface of sidekiq
+gem 'sinatra', require: false
+# For convenient scheduling periodic tasks
+gem 'whenever', require: false
+
+# For opening letters while developing
+gem 'letter_opener'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
